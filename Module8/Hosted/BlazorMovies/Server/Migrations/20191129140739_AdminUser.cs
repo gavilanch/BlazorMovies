@@ -25,11 +25,6 @@ IF EXISTS (SELECT * FROM [sys].[identity_columns] WHERE [name] IN (N'Id', N'Clai
 
 GO
 
-INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-VALUES (N'20191129140739_AdminUser', N'3.1.0-preview2.19525.5');
-
-GO
-
 
 ");
 
