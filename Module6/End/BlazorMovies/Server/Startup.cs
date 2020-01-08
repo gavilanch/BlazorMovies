@@ -30,6 +30,8 @@ namespace BlazorMovies.Server
 
             services.AddAutoMapper(typeof(Startup));
 
+            // services.AddScoped<IFileStorageService, InAppStorageService>();
+            services.AddHttpContextAccessor();
             services.AddScoped<IFileStorageService, AzureStorageService>();
 
             services.AddMvc()

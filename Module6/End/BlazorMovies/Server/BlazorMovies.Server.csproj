@@ -22,4 +22,8 @@
     <ProjectReference Include="..\Shared\BlazorMovies.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>
