@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BlazorMovies.Client.Repository
 {
-    interface IAccountsRepository
+    public interface IAccountsRepository
     {
         Task<UserToken> Login(UserInfo userInfo);
         Task<UserToken> Register(UserInfo userInfo);
