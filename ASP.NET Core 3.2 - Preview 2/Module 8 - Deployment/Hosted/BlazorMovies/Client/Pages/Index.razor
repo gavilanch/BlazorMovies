@@ -1,0 +1,26 @@
+﻿@page "/"
+@page "/index"
+@inject IMoviesRepository moviesRepository
+
+
+
+<div>
+    <h3>In theaters</h3>
+    <MoviesList Movies="InTheaters" />
+</div>
+
+<div>
+    <h3>Upcoming Releases</h3>
+    <MoviesList Movies="UpcomingReleases" />
+</div>
+
+@code{
+    private List<Movie> InTheaters;
+    private List<Movie> UpcomingReleases;
+    protected async override Task OnInitializedAsync()
+    {
+        var response = await moviesRepository.GetIndexPageDTO();
+        InTheaters = response.Intheaters;
+        UpcomingReleases = response.UpcomingReleases;
+    }
+}
