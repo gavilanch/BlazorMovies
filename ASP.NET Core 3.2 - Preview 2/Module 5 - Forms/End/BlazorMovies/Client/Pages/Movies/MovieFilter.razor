@@ -56,7 +56,7 @@
 
     private void SearchForMovies()
     {
-        Movies = Movies.Where(x => x.Title.Contains(title)).ToList();
+        Movies = repository.GetMovies().Where(x => x.Title.Contains(title)).ToList();
         Console.WriteLine($"title: {title}");
         Console.WriteLine($"selectedGenre: {selectedGenre}");
         Console.WriteLine($"upcomingReleases: {upcomingReleases}");
