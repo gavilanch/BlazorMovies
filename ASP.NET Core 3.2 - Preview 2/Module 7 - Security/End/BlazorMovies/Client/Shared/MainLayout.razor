@@ -1,4 +1,5 @@
 ﻿@inherits LayoutComponentBase
+@inject BlazorMovies.Client.Auth.TokenRenewer tokenRenewer
 
 <div class="sidebar">
     <NavMenu />
@@ -11,6 +12,13 @@
     </div>
 
     <div class="content px-4" style="margin-bottom: 20px;">
-                @Body
+        @Body
     </div>
 </div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        tokenRenewer.Initiate();
+    }
+}

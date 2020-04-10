@@ -10,5 +10,6 @@ namespace BlazorMovies.Client.Repository
     {
         Task<UserToken> Login(UserInfo userInfo);
         Task<UserToken> Register(UserInfo userInfo);
+        Task<UserToken> RenewToken();
     }
 }
