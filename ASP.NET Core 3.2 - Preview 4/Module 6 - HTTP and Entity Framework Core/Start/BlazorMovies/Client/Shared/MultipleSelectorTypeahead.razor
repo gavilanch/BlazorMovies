@@ -1,0 +1,58 @@
+﻿@typeparam T
+
+<CustomTypeahead SearchMethod="@((string searchText) => SearchMethod(searchText))"
+                 ValueChanged="@((T item) => SelectedElement(item))"
+                 >
+    <ResultTemplate>
+        @MyResultTemplate(context)
+    </ResultTemplate>
+</CustomTypeahead>
+
+<ul class="list-group">
+    @foreach (var item in SelectedElements)
+    {
+        <li draggable="true"
+            @ondragstart="@(() => HandleDragStart(item))"
+            @ondragover="@(() => HandleDragOver(item))"
+             class="list-group-item list-group-item-action"
+            >
+            @MyListTemplate(item)
+            <span @onclick="@(() => SelectedElements.Remove(item))"
+                   class="badge badge-primary badge-pill"
+                  style="cursor: pointer"
+                  >X</span>
+        </li>
+    }
+</ul>
+
+@code {
+    [Parameter] public List<T> SelectedElements { get; set; } = new List<T>();
+    [Parameter] public Func<string, Task<IEnumerable<T>>> SearchMethod { get; set; }
+    [Parameter] public RenderFragment<T> MyResultTemplate { get; set; }
+    [Parameter] public RenderFragment<T> MyListTemplate { get; set; }
+    T draggedItem;
+
+    private void SelectedElement(T item)
+    {
+        if (!SelectedElements.Any(x => x.Equals(item)))
+        {
+            SelectedElements.Add(item);
+        }
+    }
+
+    private void HandleDragStart(T item)
+    {
+        draggedItem = item;
+    }
+
+    private void HandleDragOver(T item)
+    {
+        if (!item.Equals(draggedItem))
+        {
+            var dragElementIndex = SelectedElements.IndexOf(draggedItem);
+            var elementIndex = SelectedElements.IndexOf(item);
+            SelectedElements[elementIndex] = draggedItem;
+            SelectedElements[dragElementIndex] = item;
+        }
+    }
+}

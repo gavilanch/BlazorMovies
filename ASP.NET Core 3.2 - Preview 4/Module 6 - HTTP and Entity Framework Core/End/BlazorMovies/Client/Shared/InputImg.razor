@@ -1,0 +1,53 @@
+﻿@using System.IO
+@inject IFileReaderService fileReaderService
+@using Blazor.FileReader
+
+<div>
+    <label>@Label</label>
+    <div>
+        <input type="file" @ref="inputElement" @onchange="ImageFileSelected" accept=".jpg,.jpeg,.png" />
+    </div>
+</div>
+<div>
+    @if (imageBase64 != null)
+    {
+        <div>
+            <div style="margin:10px">
+                <img src="data:image/jpeg;base64, @imageBase64" style="width: 400px;" />
+            </div>
+        </div>
+    }
+    @if (ImageURL != null)
+    {
+        <div>
+            <div style="margin:10px">
+                <img src="@ImageURL" style="width: 400px;" />
+            </div>
+        </div>
+    }
+
+</div>
+
+@code {
+    [Parameter] public string Label { get; set; } = "Image";
+    [Parameter] public string ImageURL { get; set; }
+    [Parameter] public EventCallback<string> OnSelectedImage { get; set; }
+    private string imageBase64;
+    ElementReference inputElement;
+
+    async Task ImageFileSelected()
+    {
+        foreach (var file in await fileReaderService.CreateReference(inputElement).EnumerateFilesAsync())
+        {
+            using (MemoryStream memoryStream = await file.CreateMemoryStreamAsync(4 * 1024))
+            {
+                var imageBytes = new byte[memoryStream.Length];
+                memoryStream.Read(imageBytes, 0, (int)memoryStream.Length);
+                imageBase64 = Convert.ToBase64String(imageBytes);
+                await OnSelectedImage.InvokeAsync(imageBase64);
+                ImageURL = null;
+                StateHasChanged();
+            }
+        }
+    }
+}
