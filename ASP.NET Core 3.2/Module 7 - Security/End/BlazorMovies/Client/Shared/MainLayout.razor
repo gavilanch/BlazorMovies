@@ -34,7 +34,8 @@
         var authState = await AuthenticationState;
         if (authState.User.Identity.IsAuthenticated)
         {
-            navigationManager.NavigateTo("logout");
+            // Uncomment to activate automatic logout
+            //navigationManager.NavigateTo("logout");
         }
     }
 }
