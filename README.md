@@ -1,4 +1,4 @@
-# Source code for my course Programming in Blazor - ASP.NET Core 3.1
+# Source code for my course Programming in Blazor - ASP.NET Core 3.2
 
 In this course you'll learn how to build Blazor applications from scratch
 
