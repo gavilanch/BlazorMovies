@@ -64,6 +64,7 @@ namespace BlazorMovies.SharedBackend.Repositories
             var movie = await context.Movies.Where(x => x.Id == id)
                 .Include(x => x.MoviesGenres).ThenInclude(x => x.Genre)
                 .Include(x => x.MoviesActors).ThenInclude(x => x.Person)
+                .AsNoTracking()
                 .FirstOrDefaultAsync();
 
             if (movie == null) { return null; }
@@ -117,6 +118,7 @@ namespace BlazorMovies.SharedBackend.Repositories
             var moviesInTheaters = await context.Movies
                 .Where(x => x.InTheaters).Take(limit)
                 .OrderByDescending(x => x.ReleaseDate)
+                .AsNoTracking()
                 .ToListAsync();
 
             var todaysDate = DateTime.Today;
@@ -124,6 +126,7 @@ namespace BlazorMovies.SharedBackend.Repositories
             var upcomingReleases = await context.Movies
                 .Where(x => x.ReleaseDate > todaysDate)
                 .OrderBy(x => x.ReleaseDate).Take(limit)
+                .AsNoTracking()
                 .ToListAsync();
 
             var response = new IndexPageDTO();
