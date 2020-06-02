@@ -1,0 +1,46 @@
+﻿@inject IDisplayMessage displayMessage
+
+@for (int i = 1; i <= MaximumRating; i++)
+{
+    var starNumber = i;
+    <span @onclick="@(() => onclickHandle(starNumber))"
+          @onmouseover="@(() => onmouseoverHandle(starNumber))"
+          style="cursor:pointer;"
+          class="fa fa-star @(SelectedRating >= i ? "checked" : null)"
+          >
+
+    </span>
+}
+
+@code {
+    [Parameter] public int MaximumRating { get; set; }
+    [Parameter] public int SelectedRating { get; set; }
+    [Parameter] public EventCallback<int> OnVote { get; set; }
+    [CascadingParameter] public Task<AuthenticationState> AuthenticationState { get; set; }
+
+    private bool voted = false;
+
+    private async Task onclickHandle(int starNumber)
+    {
+        var authState = await AuthenticationState;
+        var user = authState.User;
+
+        if (!user.Identity.IsAuthenticated)
+        {
+            await displayMessage.DisplayErrorMessage("You must login in order to vote");
+            return;
+        }
+
+        SelectedRating = starNumber;
+        voted = true;
+        await OnVote.InvokeAsync(SelectedRating);
+    }
+
+    private void onmouseoverHandle(int starNumber)
+    {
+        if (!voted)
+        {
+            SelectedRating = starNumber;
+        }
+    }
+}

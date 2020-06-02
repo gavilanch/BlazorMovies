@@ -1,0 +1,9 @@
+﻿@page "/routable"
+
+<h3>Routable Component</h3>
+
+The value is @Value
+
+@code {
+    [CascadingParameter(Name = "Value")] public int Value { get; set; }
+}

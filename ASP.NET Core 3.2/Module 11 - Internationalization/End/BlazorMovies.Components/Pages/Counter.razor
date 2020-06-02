@@ -1,0 +1,9 @@
+﻿@page "/counter"
+
+<p>Current count (Azure DevOps): @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+<input type="number" @bind="currentCount" />
+
+<Component1 Param1="This is a parameter" />

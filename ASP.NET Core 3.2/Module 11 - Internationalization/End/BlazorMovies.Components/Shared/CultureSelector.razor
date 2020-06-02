@@ -1,0 +1,51 @@
+﻿@inject NavigationManager navigationManager
+@inject IJSRuntime js
+
+@using System.Globalization
+
+<strong>Culture:</strong>
+
+<select @bind="culture">
+    @foreach (var item in cultures)
+    {
+        <option value="@item">@item.DisplayName</option>
+    }
+</select>
+
+@code {
+
+    [CascadingParameter] public AppMode AppMode { get; set; }
+
+    CultureInfo[] cultures = new[]
+    {
+        new CultureInfo("en-US"),
+        new CultureInfo("es-DO"),
+        new CultureInfo("en"),
+        new CultureInfo("fr-FR")
+    };
+
+    CultureInfo culture
+    {
+        get => CultureInfo.CurrentUICulture;
+        set
+        {
+
+            if (AppMode == AppMode.WebAssembly)
+            {
+                var jsInProcessRuntime = (IJSInProcessRuntime)js;
+                jsInProcessRuntime.InvokeVoid("setInLocalStorage", "culture", value.Name);
+                navigationManager.NavigateTo(navigationManager.Uri, forceLoad: true);
+            }
+            else
+            {
+                var culture = value.Name;
+                var uri = new Uri(navigationManager.Uri)
+                    .GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped);
+
+                var query = $"?culture={Uri.EscapeDataString(culture)}&redirectionURI={Uri.EscapeDataString(uri)}";
+                navigationManager.NavigateTo("/culture/SetCulture" + query, forceLoad: true);
+            }
+        }
+    }
+
+}
