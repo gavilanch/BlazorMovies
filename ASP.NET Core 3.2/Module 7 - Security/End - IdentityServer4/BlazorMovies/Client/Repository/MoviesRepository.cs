@@ -20,7 +20,7 @@ namespace BlazorMovies.Client.Repository
 
         public async Task<IndexPageDTO> GetIndexPageDTO()
         {
-            return await httpService.GetHelper<IndexPageDTO>(url, false);
+            return await httpService.GetHelper<IndexPageDTO>(url, includeToken: false);
         }
 
         public async Task<MovieUpdateDTO> GetMovieForUpdate(int id)
@@ -30,7 +30,7 @@ namespace BlazorMovies.Client.Repository
 
         public async Task<DetailsMovieDTO> GetDetailsMovieDTO(int id)
         {
-            return await httpService.GetHelper<DetailsMovieDTO>($"{url}/{id}", false);
+            return await httpService.GetHelper<DetailsMovieDTO>($"{url}/{id}", includeToken: false);
         }
 
         public async Task<PaginatedResponse<List<Movie>>> GetMoviesFiltered(FilterMoviesDTO filterMoviesDTO)

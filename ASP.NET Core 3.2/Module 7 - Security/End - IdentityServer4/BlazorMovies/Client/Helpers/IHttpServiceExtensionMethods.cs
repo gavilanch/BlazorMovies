@@ -8,8 +8,8 @@ namespace BlazorMovies.Client.Helpers
 {
     public static class IHttpServiceExtensionMethods
     {
-        public static async Task<T> GetHelper<T>(this IHttpService httpService, string url, 
-            bool includeToken = true)
+        public static async Task<T> GetHelper<T>(this IHttpService httpService, 
+            string url, bool includeToken = true)
         {
             var response = await httpService.Get<T>(url, includeToken);
             if (!response.Success)

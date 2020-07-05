@@ -17,9 +17,9 @@ namespace BlazorMovies.Client.Repository
             this.httpService = httpService;
         }
 
-        public async Task<List<Genre>> GetGenres(bool includeToken = true)
+        public async Task<List<Genre>> GetGenres()
         {
-            var response = await httpService.Get<List<Genre>>(url, includeToken);
+            var response = await httpService.Get<List<Genre>>(url, includeToken: false);
             if (!response.Success)
             {
                 throw new ApplicationException(await response.GetBody());
