@@ -1,0 +1,33 @@
+﻿@if (AppMode == AppMode.WebAssembly)
+{
+    <AuthorizeView>
+        <Authorized>
+            <span>Hello, @context.User.Identity.Name!</span>
+            <a href="Logout" class="nav-link btn btn-link">Log out</a>
+        </Authorized>
+        <NotAuthorized>
+            <a href="Register">Register</a>
+            <a href="Login" class="nav-link btn btn-link">Login</a>
+        </NotAuthorized>
+    </AuthorizeView>
+}
+else
+{
+    <AuthorizeView>
+        <Authorized>
+            <a href="Identity/Account/Manage">Hello, @context.User.Identity.Name!</a>
+            <form method="post" action="Identity/Account/LogOut">
+                <button type="submit" class="nav-link btn btn-link">Log out</button>
+            </form>
+        </Authorized>
+        <NotAuthorized>
+            <a href="Identity/Account/Register">Register</a>
+            <a href="Identity/Account/Login">Log in</a>
+        </NotAuthorized>
+    </AuthorizeView>
+}
+
+
+@code {
+    [CascadingParameter] public AppMode AppMode { get; set; }
+}
