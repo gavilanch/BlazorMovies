@@ -39,6 +39,7 @@ namespace BlazorMovies.Client
             services.AddScoped<IRatingRepository, RatingRepository>();
             services.AddScoped<IDisplayMessage, DisplayMessage>();
             services.AddScoped<IUsersRepository, UserRepository>();
+            services.AddScoped<TokenRenewer>();
             services.AddAuthorizationCore();
 
             services.AddScoped<JWTAuthenticationStateProvider>();
