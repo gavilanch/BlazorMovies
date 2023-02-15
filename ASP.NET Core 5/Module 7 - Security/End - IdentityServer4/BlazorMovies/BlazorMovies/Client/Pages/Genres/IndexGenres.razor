@@ -1,0 +1,57 @@
+﻿@page "/genres"
+@inject IGenreRepository genreRepository
+@attribute [Authorize(Roles = "Admin")]
+
+<h3>Index Genres</h3>
+
+<div class="form-group">
+    <a class="btn btn-info" href="genre/create">New Genre</a>
+</div>
+
+<GenericList List="Genres">
+    <WholeListTemplate>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Genres)
+                {
+                    <tr>
+                        <td>
+                            <a class="btn btn-success" href="/genre/edit/@item.Id">Edit</a>
+                            <button class="btn btn-danger" @onclick="@(() => DeleteGenres(item.Id))">Delete</button>
+                        </td>
+                        <td>@item.Name</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </WholeListTemplate>
+</GenericList>
+
+@code {
+
+    List<Genre> Genres;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            Genres = await genreRepository.GetGenres();
+        }
+        catch (Exception ex)
+        {
+
+        }
+    }
+
+    private async Task DeleteGenres(int Id)
+    {
+        await genreRepository.DeleteGenre(Id);
+        Genres = await genreRepository.GetGenres();
+    }
+}

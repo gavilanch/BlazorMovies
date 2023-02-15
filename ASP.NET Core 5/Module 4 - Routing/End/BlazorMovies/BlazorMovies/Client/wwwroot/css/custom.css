@@ -1,0 +1,23 @@
+﻿.individual-movie-container {
+    margin-right: 2%;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.movie-poster {
+    width: 225px;
+    height: 300px;
+}
+
+.individual-movie-container p {
+    max-width: 225px;
+    height: 44px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.movies-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}

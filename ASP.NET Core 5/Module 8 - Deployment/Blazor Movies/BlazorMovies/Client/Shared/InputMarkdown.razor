@@ -1,0 +1,22 @@
+﻿@inherits InputTextArea
+@using System.Linq.Expressions
+@typeparam TValue
+
+<div>
+    <label>@Label</label>
+    <div>
+        <InputTextArea @bind-Value="CurrentValue" />
+        <ValidationMessage For="For" />
+    </div>
+</div>
+<div>
+    <label>@Label (preview):</label>
+    <div class="markdown-container">
+        <RenderMarkdown MarkdownContent="@CurrentValue" />
+    </div>
+</div>
+
+@code {
+    [Parameter] public Expression<Func<TValue>> For { get; set; }
+    [Parameter] public string Label { get; set; }
+}
